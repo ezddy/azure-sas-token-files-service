@@ -23,7 +23,7 @@
         },
         "repoURL": {
             "type": "string",
-            "defaultValue": "https://github.com/Azure-Samples/functions-node-sas-token.git",
+            "defaultValue": "https://github.com/ezddy/azure-sas-token-files-service.git",
             "metadata": {
                 "description": "Repo URL"
             }
@@ -46,18 +46,9 @@
     "variables": {
         "functionAppName": "[parameters('appName')]",
         "hostingPlanName": "[parameters('appName')]",
-        "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'azfunctions')]"
+        "storageAccountName": "mastermobilestorage01"
     },
     "resources": [
-        {
-            "type": "Microsoft.Storage/storageAccounts",
-            "name": "[variables('storageAccountName')]",
-            "apiVersion": "2015-06-15",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "accountType": "[parameters('storageAccountType')]"
-            }
-        },
         {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2015-04-01",
