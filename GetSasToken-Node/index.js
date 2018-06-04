@@ -42,6 +42,6 @@ function generateSasToken(context, share, directory, permissions) {
     var url = fileService.getUrl(share, directory, sasToken);
     return {
         token: sasToken,
-        url: url;
+        url: url
     };
 }
