@@ -2,7 +2,7 @@ var azure = require('azure-storage');
 
 module.exports = function(context, req) {
     if (req.body.share) {
-        context.res = generateSasToken(context, req.body.share);
+        context.res = generateSasToken(context, req.body.share, req.body.directory, req.body.permissions);
     } else {
         context.res = {
             status: 400,
@@ -13,7 +13,7 @@ module.exports = function(context, req) {
     context.done();
 };
 
-function generateSasToken(context, share) {
+function generateSasToken(context, share, directory, permissions) {
     var connString = process.env.AzureWebJobsStorage;
     var fileService = azure.createFileService(connString);
 
@@ -24,10 +24,10 @@ function generateSasToken(context, share) {
     var expiryDate = new Date(startDate);
     expiryDate.setMinutes(startDate.getMinutes() + 60);
 
-    // The following values can be used for permissions: 
+    // Valeurs possibles pour les permissions: 
     // "a" (Add), "r" (Read), "w" (Write), "d" (Delete), "l" (List)
-    // Concatenate multiple permissions, such as "rwa" = Read, Write, Add
-    var permissions = "rl" 
+    // Concatener plusieurs permissions : "rwa" = Read, Write, Add
+    permissions = permissions || (azure.FileUtilities.sharedAccessPermissions.READ + azure.FileUtilities.sharedAccessPermissions.LIST); 
 
     var sharedAccessPolicy = {
         AccessPolicy: {
@@ -38,7 +38,7 @@ function generateSasToken(context, share) {
         }
     };
     
-    var sasToken = fileService.generateSharedAccessSignature(share, "testdir", undefined, sharedAccessPolicy, undefined);
+    var sasToken = fileService.generateSharedAccessSignature(share, directory, undefined, sharedAccessPolicy, undefined);
     
     return {
         token: sasToken
