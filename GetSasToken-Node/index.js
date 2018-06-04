@@ -27,7 +27,7 @@ function generateSasToken(context, share, directory, permissions) {
     // Valeurs possibles pour les permissions: 
     // "a" (Add), "r" (Read), "w" (Write), "d" (Delete), "l" (List)
     // Concatener plusieurs permissions : "rwa" = Read, Write, Add
-    permissions = permissions || (azure.FileUtilities.sharedAccessPermissions.READ + azure.FileUtilities.sharedAccessPermissions.LIST); 
+    permissions = permissions || (azure.FileUtilities.SharedAccessPermissions.READ + azure.FileUtilities.SharedAccessPermissions.LIST); 
 
     var sharedAccessPolicy = {
         AccessPolicy: {
