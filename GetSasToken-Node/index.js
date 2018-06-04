@@ -39,7 +39,7 @@ function generateSasToken(context, share, directory, permissions) {
     };
     
     var sasToken = fileService.generateSharedAccessSignature(share, directory, undefined, sharedAccessPolicy, undefined);
-    var url = fileService.getUrl(share, directory, sasToken);
+    var url = fileService.getUrl(share, directory, undefined, sasToken);
     return {
         token: sasToken,
         url: url
