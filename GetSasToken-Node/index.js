@@ -24,11 +24,14 @@ function generateSasToken(context, share, directory, permissions) {
     var expiryDate = new Date(startDate);
     expiryDate.setMinutes(startDate.getMinutes() + 60);
 
-    // Valeurs possibles pour les permissions: 
+    // Valeurs possibles pour les permissions : 
     // "a" (Add), "r" (Read), "w" (Write), "d" (Delete), "l" (List)
     // Concatener plusieurs permissions : "rwa" = Read, Write, Add
     permissions = permissions || (azure.FileUtilities.SharedAccessPermissions.READ + azure.FileUtilities.SharedAccessPermissions.LIST); 
 
+    // Valeurs possibles pour le repertoire :
+    // "_ISO/x", "_ISO/x/y/..."
+    directory = directory || "_ISO";
     var sharedAccessPolicy = {
         AccessPolicy: {
             Permissions: permissions,
